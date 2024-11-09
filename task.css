@@ -20,7 +20,6 @@ body {
     scroll-behavior: smooth;
   }
   
-  /* Hide the scrollbar */
   .speakers-slider::-webkit-scrollbar {
     display: none;
   }
@@ -91,7 +90,6 @@ body {
     overflow: hidden;
   }
   
-  /* Container for the selected speaker details */
   .selected-speaker {
     display: flex;
     align-items: center;
