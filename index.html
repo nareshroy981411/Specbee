@@ -9,6 +9,291 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
     />
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: #ddd;
+  }
+  
+  .speakers-section {
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .speakers-slider {
+    display: flex;
+    overflow-x: scroll;
+    scroll-snap-type: x mandatory;
+    gap: 16px;
+    padding: 10px;
+    scroll-behavior: smooth;
+  }
+  
+  /* Hide the scrollbar */
+  .speakers-slider::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .speakers-slider {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .speaker-card {
+    flex: 0 0 auto;
+    width: 200px;
+    padding: 16px;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    cursor: pointer;
+    scroll-snap-align: start;
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  .speaker-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .speaker-card h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 8px 0 4px;
+    color: #333;
+  }
+  
+  .speaker-card p {
+    font-size: 0.875rem;
+    color: #666;
+    margin: 0;
+  }
+  
+  .carousel-control {
+    background-color: rgba(0, 0, 0, 0.1);
+    color: #333;
+    font-size: 1.5rem;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 50%;
+    transition: background-color 0.2s;
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  
+  .carousel-control:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+  
+  .speaker-card img {
+    width: 75%;
+    height: auto;
+    border-radius: 50%;
+  }
+  
+  .carousel-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+  }
+  
+  /* Container for the selected speaker details */
+  .selected-speaker {
+    display: flex;
+    align-items: center;
+    margin: 20px;
+    padding: 16px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    transition: opacity 0.3s ease;
+  }
+  
+  .selected-speaker[hidden] {
+    display: none;
+  }
+  
+  .selected-speaker-image img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-right: 20px;
+    object-fit: cover;
+  }
+  
+  .selected-speaker-details h3 {
+    font-size: 1.25rem;
+    margin: 0;
+    color: #333;
+  }
+  
+  .selected-speaker-details h4 {
+    font-size: 1rem;
+    margin: 0;
+    color: #333;
+  }
+  
+  .selected-speaker-details p {
+    margin: 5px 0;
+    color: #666;
+  }
+  
+  .selected-speaker-description {
+    width: 70%;
+    margin-left: 30px;
+  }
+  
+  .selected-speaker-icons {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+  
+  .selected-speaker-icons i {
+    color: #666;
+    font-size: 1.5rem;
+    transition: color 0.3s ease;
+  }
+  
+  .selected-speaker-icons i:hover {
+    color: gray;
+  }
+  
+  .vertical-line {
+    width: 1px;
+    background-color: rgb(130, 125, 125);
+    margin-left: 30px;
+    height: auto;
+    align-self: stretch;
+  }
+  
+  .close-icon {
+    position: absolute;
+    top: 130px;
+    right: 50px;
+    cursor: pointer;
+    font-size: 1rem;
+    color: black;
+    transition: color 0.3s;
+  }
+  
+  .close-icon:hover {
+    color: gray;
+  }
+  
+  .program-button-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.program-button {
+    background-color: #007bff;
+    color: #fff;
+    padding: 15px 30px;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.arrow-note {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+    font-size: 14px;
+    color: #555;
+}
+
+.image {
+    width: 50px;
+    height: auto;
+    margin-left: 10px;
+}
+  /* Responsive Styles */
+  @media (max-width: 768px) {
+    .speakers-slider {
+      gap: 12px;
+    }
+  
+    .speaker-card {
+      width: 180px;
+      padding: 12px;
+    }
+  
+    .speaker-card h3 {
+      font-size: 0.95rem;
+    }
+  
+    .speaker-card p {
+      font-size: 0.8rem;
+    }
+  
+    .selected-speaker {
+      flex-direction: column;
+      align-items: center;
+      padding: 12px;
+    }
+  
+    .selected-speaker-image img {
+      width: 80px;
+      height: 80px;
+      margin-right: 0;
+      margin-bottom: 12px;
+    }
+  
+    .selected-speaker-description {
+      width: 100%;
+      margin: 0;
+    }
+  
+    .selected-speaker-icons {
+      margin: 12px 0;
+    }
+  
+    .vertical-line {
+      display: none;
+    }
+  
+    .close-icon {
+      top: 20px;
+      right: 20px;
+      font-size: 1.2rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .speaker-card {
+      width: 160px;
+    }
+  
+    .selected-speaker {
+      padding: 10px;
+    }
+  
+    .selected-speaker-details h3 {
+      font-size: 1rem;
+    }
+  
+    .selected-speaker-details h4 {
+      font-size: 0.9rem;
+    }
+  
+    .carousel-control {
+      font-size: 1.2rem;
+      padding: 6px;
+    }
+  }
+  
+    </style>
   </head>
   <body>
     <section class="speakers-section">
@@ -20,7 +305,7 @@
 
       <div class="selected-speaker" id="selectedSpeaker" hidden>
         <div class="close-icon" onclick="closeCard()">
-            <i class="fas fa-times"></i>
+          <i class="fas fa-times"></i>
         </div>
         <div class="selected-speaker-image">
           <img id="selectedSpeakerImage" src="" alt="" />
@@ -47,119 +332,7 @@
           ❮
         </button>
 
-        <div class="speakers-slider">
-          <div
-            class="speaker-card"
-            tabindex="0"
-            aria-label="John Doe, Chief Marketing Officer at Acme Corp"
-            data-name="John Doe"
-            data-title="Chief Marketing Officer"
-            data-company="Acme Corp"
-            data-description="Monotonectally synergize business communities rather than client-centric convergence. Assertively unleash cross-platform best practices rather than pandemic total linkage. Synergistically monetize parallel infomediaries whereas 2.0 mindshare. Dramatically pursue real-time markets through e-business strategic theme areas."
-          >
-            <img src="./images/Ellipse 24 (1).png" alt="John Doe" />
-            <h3>John Doe</h3>
-            <p>Chief Marketing Officer</p>
-            <p>Acme Corp</p>
-          </div>
-          <div
-            class="speaker-card"
-            tabindex="0"
-            aria-label="John Doe, Chief Marketing Officer at Acme Corp"
-            data-name="John Doe"
-            data-title="Chief Engagement Officer"
-            data-company="Acquia"
-            data-description="Monotonectally synergize business communities rather than client-centric convergence. Assertively unleash cross-platform best practices rather than pandemic total linkage. Synergistically monetize parallel infomediaries whereas 2.0 mindshare. Dramatically pursue real-time markets through e-business strategic theme areas."
-          >
-            <img src="./images/Ellipse 24 (2).png" alt="John Doe" />
-            <h3>John Doe</h3>
-            <p>Chief Engagement Officer</p>
-            <p>Acquia</p>
-          </div>
-          <div
-            class="speaker-card"
-            tabindex="0"
-            aria-label="John Doe, Chief Marketing Officer at Acme Corp"
-            data-name="John Doe"
-            data-title="Chief Technical Developer"
-            data-company="Pantheon"
-            data-description="Monotonectally synergize business communities rather than client-centric convergence. Assertively unleash cross-platform best practices rather than pandemic total linkage. Synergistically monetize parallel infomediaries whereas 2.0 mindshare. Dramatically pursue real-time markets through e-business strategic theme areas."
-          >
-            <img src="./images/Ellipse 24 (3).png" alt="John Doe" />
-            <h3>John Doe</h3>
-            <p>Chief Technical Developer</p>
-            <p>Pantheon</p>
-          </div>
-          <div
-            class="speaker-card"
-            tabindex="0"
-            aria-label="John Doe, Chief Marketing Officer at Acme Corp"
-            data-name="John Doe"
-            data-title="Chief Marketing Officer"
-            data-company="Specbee"
-            data-description="Monotonectally synergize business communities rather than client-centric convergence. Assertively unleash cross-platform best practices rather than pandemic total linkage. Synergistically monetize parallel infomediaries whereas 2.0 mindshare. Dramatically pursue real-time markets through e-business strategic theme areas."
-          >
-            <img src="./images/Ellipse 24.png" alt="John Doe" />
-            <h3>John Doe</h3>
-            <p>Chief Marketing Officer</p>
-            <p>Specbee</p>
-          </div>
-          <div
-            class="speaker-card"
-            tabindex="0"
-            aria-label="John Doe, Chief Marketing Officer at Acme Corp"
-            data-name="John Doe"
-            data-title="Chief Marketing Officer"
-            data-company="Acme Corp"
-            data-description="Monotonectally synergize business communities rather than client-centric convergence. Assertively unleash cross-platform best practices rather than pandemic total linkage. Synergistically monetize parallel infomediaries whereas 2.0 mindshare. Dramatically pursue real-time markets through e-business strategic theme areas."
-          >
-            <img src="./images/Ellipse 24 (1).png" alt="John Doe" />
-            <h3>John Doe</h3>
-            <p>Chief Marketing Officer</p>
-            <p>Acme Corp</p>
-          </div>
-          <div
-            class="speaker-card"
-            tabindex="0"
-            aria-label="John Doe, Chief Marketing Officer at Acme Corp"
-            data-name="John Doe"
-            data-title="Chief Engagement Officer"
-            data-company="Acquia"
-            data-description="Monotonectally synergize business communities rather than client-centric convergence. Assertively unleash cross-platform best practices rather than pandemic total linkage. Synergistically monetize parallel infomediaries whereas 2.0 mindshare. Dramatically pursue real-time markets through e-business strategic theme areas."
-          >
-            <img src="./images/Ellipse 24 (2).png" alt="John Doe" />
-            <h3>John Doe</h3>
-            <p>Chief Engagement Officer</p>
-            <p>Acquia</p>
-          </div>
-          <div
-            class="speaker-card"
-            tabindex="0"
-            aria-label="John Doe, Chief Marketing Officer at Acme Corp"
-            data-name="John Doe"
-            data-title="Chief Technical Developer"
-            data-company="Pantheon"
-            data-description="Monotonectally synergize business communities rather than client-centric convergence. Assertively unleash cross-platform best practices rather than pandemic total linkage. Synergistically monetize parallel infomediaries whereas 2.0 mindshare. Dramatically pursue real-time markets through e-business strategic theme areas."
-          >
-            <img src="./images/Ellipse 24 (3).png" alt="John Doe" />
-            <h3>John Doe</h3>
-            <p>Chief Technical Developer</p>
-            <p>Pantheon</p>
-          </div>
-          <div
-            class="speaker-card"
-            tabindex="0"
-            aria-label="John Doe, Chief Marketing Officer at Acme Corp"
-            data-name="John Doe"
-            data-title="Chief Marketing Officer"
-            data-company="Specbee"
-            data-description="Monotonectally synergize business communities rather than client-centric convergence. Assertively unleash cross-platform best practices rather than pandemic total linkage. Synergistically monetize parallel infomediaries whereas 2.0 mindshare. Dramatically pursue real-time markets through e-business strategic theme areas."
-          >
-            <img src="./images/Ellipse 24.png" alt="John Doe" />
-            <h3>John Doe</h3>
-            <p>Chief Marketing Officer</p>
-            <p>Specbee</p>
-          </div>
+        <div class="speakers-slider" id="speakersSlider">
         </div>
 
         <button class="carousel-control right" aria-label="Next Speaker">
@@ -168,14 +341,112 @@
       </div>
     </section>
     <div class="program-button-container">
-   
-        <div class="arrow-note">
-            Click here to see the full program
+      <div class="arrow-note">
+        Click here to see the full program
         <a href="https://github.com/nareshroy981411/Specbee" target="_blank" class="program-button">See the Program</a>
-        </div>
-        <img src="./images/Arrow 02.png" alt="Arrow" class="image">
+      </div>
+      <img src="./images/Arrow 02.png" alt="Arrow" class="image">
     </div>
 
-    <script src="task.js"></script>
+    <script>
+  document.addEventListener('DOMContentLoaded', () => {
+  const speakersSlider = document.querySelector('.speakers-slider');
+  const leftButton = document.querySelector('.carousel-control.left');
+  const rightButton = document.querySelector('.carousel-control.right');
+
+  const speakerCards = Array.from(document.querySelectorAll('.speaker-card'));
+
+  if (speakerCards.length === 0) {
+    console.error("No speaker cards found.");
+    return;
+  }
+
+  const cardWidth = speakerCards[0].offsetWidth + 16;  // Adjust based on your margin
+
+  // Carousel control logic
+  leftButton.addEventListener('click', () => {
+    speakersSlider.scrollBy({ left: -cardWidth, behavior: 'smooth' });
+  });
+
+  rightButton.addEventListener('click', () => {
+    speakersSlider.scrollBy({ left: cardWidth, behavior: 'smooth' });
+  });
+
+  function showSpeakerDetails(element) {
+    const name = element.getAttribute("data-name");
+    const title = element.getAttribute("data-title");
+    const company = element.getAttribute("data-company");
+    const description = element.getAttribute("data-description");
+    const imageSrc = element.querySelector("img").src;
+
+    document.getElementById("selectedSpeakerName").textContent = name;
+    document.getElementById("selectedSpeakerTitle").textContent = title;
+    document.getElementById("selectedSpeakerCompany").textContent = company;
+    document.getElementById("selectedSpeakerDescription").textContent = description;
+    document.getElementById("selectedSpeakerImage").src = imageSrc;
+
+    document.getElementById("selectedSpeaker").hidden = false;
+  }
+
+  document.querySelectorAll(".speaker-card").forEach(card => {
+    card.addEventListener("click", function() {
+      showSpeakerDetails(card);
+    });
+  });
+
+  function closeCard() {
+    document.getElementById("selectedSpeaker").hidden = true;
+  }
+
+  document.querySelector(".close-icon").addEventListener("click", closeCard);
+});
+
+function displaySpeakers() {
+  const speakersData = [
+    ["John Doe", "Chief Marketing Officer", "Acme Corp", "Monotonectally synergize business communities rather than client-centric convergence. Assertively unleash cross-platform best practices rather than pandemic total linkage. Synergistically monetize parallel infomediaries whereas 2.0 mindshare. Dramatically pursue real-time markets through e-business strategic theme areas.", "./images/Ellipse 24 (1).png"],
+    ["Jane Smith", "Chief Engagement Officer", "Acquia", "Has over 15 years of experience in tech.Is a keynote speaker at several international conferences.Authored multiple articles in industry-leading journals.", "./images/Ellipse 24 (2).png"],
+    ["Alice Brown", "Chief Technical Developer", "Pantheon", "Has a passion for artificial intelligence and machine learning.Worked with over 100 Fortune 500 companies.Loves to mentor young professionals in the field.", "./images/Ellipse 24 (3).png"],
+    ["Tom White", "Chief Marketing Officer", "Specbee", "Published a book on digital marketing strategies.Is known for creative problem-solving and innovation.Has a passion for artificial intelligence and machine learning.", "./images/Ellipse 24.png"],
+    ["John Doe", "Chief Marketing Officer", "Acme Corp", "Monotonectally synergize business communities rather than client-centric convergence. Assertively unleash cross-platform best practices rather than pandemic total linkage. Synergistically monetize parallel infomediaries whereas 2.0 mindshare. Dramatically pursue real-time markets through e-business strategic theme areas.", "./images/Ellipse 24 (1).png"],
+    ["Jane Smith", "Chief Engagement Officer", "Acquia", "Has over 15 years of experience in tech.Is a keynote speaker at several international conferences.Authored multiple articles in industry-leading journals.", "./images/Ellipse 24 (2).png"],
+    ["Alice Brown", "Chief Technical Developer", "Pantheon", "Has a passion for artificial intelligence and machine learning.Worked with over 100 Fortune 500 companies.Loves to mentor young professionals in the field.", "./images/Ellipse 24 (3).png"],
+    ["Tom White", "Chief Marketing Officer", "Specbee", "Published a book on digital marketing strategies.Is known for creative problem-solving and innovation.Has a passion for artificial intelligence and machine learning.", "./images/Ellipse 24.png"],  
+
+  ];
+
+  const speakersSlider = document.getElementById('speakersSlider');
+
+  speakersSlider.innerHTML = '';
+
+  speakersData.forEach(speaker => {
+    const [name, title, company, description, imageSrc] = speaker;
+
+    const card = document.createElement('div');
+    card.className = 'speaker-card';
+    card.setAttribute('tabindex', '0');
+    card.setAttribute('aria-label', `${name}, ${title} at ${company}`);
+    card.setAttribute('data-name', name);
+    card.setAttribute('data-title', title);
+    card.setAttribute('data-company', company);
+    card.setAttribute('data-description', description);
+
+    card.innerHTML = `
+      <img src="${imageSrc}" alt="${name}" />
+      <h3>${name}</h3>
+      <p>${title}</p>
+      <p>${company}</p>
+    `;
+
+    speakersSlider.appendChild(card);
+
+    card.addEventListener("click", function() {
+      showSpeakerDetails(card);
+    });
+  });
+}
+
+displaySpeakers();
+
+    </script>
   </body>
 </html>
